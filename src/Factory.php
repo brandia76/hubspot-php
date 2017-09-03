@@ -37,8 +37,6 @@ use SevenShores\Hubspot\Http\Client;
 class Factory
 {
     
-    private $oauthVersion = 'oauth';
-    
     /**
      * C O N S T R U C T O R ( ^_^)y
      *
@@ -77,18 +75,21 @@ class Factory
      */
     public static function createWithToken($token, $client = null, $clientOptions = [], $wrapResponse = true)
     {
-        return new static(['key' => $token, $this->oauthVersion => true], $client, $clientOptions, $wrapResponse);
+        return new static(['key' => $token, 'oauth' => true], $client, $clientOptions, $wrapResponse);
     }
     
-        /**
-     * Sets the version of oauth to oauth2, if needed
+    /**
+     * Create an instance of the service with an Oauth token.
      *
-     * @return $this
+     * @param  string $token Hubspot oauth access token.
+     * @param  Client $client An Http client.
+     * @param array $clientOptions options to be send with each request
+     * @param bool $wrapResponse wrap request response in own Response object
+     * @return static
      */
-    public function setOAuth2() 
+    public static function createWithOAuth2Token($token, $client = null, $clientOptions = [], $wrapResponse = true)
     {
-        $this->oauthVersion = 'oauth2';
-        return $this;
+        return new static(['key' => $token, 'oauth2' => true], $client, $clientOptions, $wrapResponse);
     }
 
     /**
